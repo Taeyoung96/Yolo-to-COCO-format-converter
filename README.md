@@ -63,12 +63,15 @@ If you want to read json files more clearly, you should use `JQ`!
 ## Results  
 
 <p align="center"><img src="https://user-images.githubusercontent.com/41863759/100314819-d8c43980-2ffa-11eb-9b9b-ecadc411544a.png" width="200px"></p>  
-<p align="center"> <Result of Json file> </p>  
+
+<p align="center">Result of Json file</p>  
 
 <p align="center"><img src="https://user-images.githubusercontent.com/41863759/100314966-217bf280-2ffb-11eb-95fc-156131d4a38e.png" width="350px"></p>  
-<p align="center"> <On debug mode, you can check bounding boxes> </p>  
+
+<p align="center">On debug mode, you can check bounding boxes</p>  
 
 <p align="center"><img src="https://user-images.githubusercontent.com/41863759/100314970-250f7980-2ffb-11eb-88e6-3c11613a69c3.png" width="700px"></p>  
-<p align="center"> <On debug mode, you can check annotation information on terminal> </p> 
+
+<p align="center">On debug mode, you can check annotation information on terminal</p> 
 
   
