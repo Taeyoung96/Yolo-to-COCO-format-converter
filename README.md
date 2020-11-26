@@ -47,12 +47,18 @@ You need to provide 2 argments(essential) & 1 argments(optional).
 - debug : If you want to check the bounding boxes or annotation information.
 
 When you want to make json file,  
-`python main.py --path [Absolute Path of train.txt] --output [Name of the json file]`  
-(For example)`python main.py --path /home/taeyoungkim/Desktop/Yolo-to-COCO-format-converter/tutorial/train.txt --output train`  
+- `python main.py --path [Absolute Path of train.txt] --output [Name of the json file]`  
+- (For example)`python main.py --path /home/taeyoungkim/Desktop/Yolo-to-COCO-format-converter/tutorial/train.txt --output train`  
 
 Or when you want to check the bounding boxes,  
-`python main.py --path [Absolute Path of train.txt] --output [Name of the json file] --debug True`
-`python main.py --path /home/taeyoungkim/Desktop/Yolo-to-COCO-format-converter/tutorial/train.txt --output train --debug True`  
+- `python main.py --path [Absolute Path of train.txt] --output [Name of the json file] --debug True`
+- (For example)`python main.py --path /home/taeyoungkim/Desktop/Yolo-to-COCO-format-converter/tutorial/train.txt --output train --debug True`  
+
+#### Tips  
+If you want to read json files more clearly, you should use `JQ`!  
+- [JQ Manual](https://stedolan.github.io/jq/manual/)
+- (For example) `cd output`
+- `jq . train.json > train_jq.json`
 
 ## Results  
 
