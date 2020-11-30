@@ -42,7 +42,7 @@ You can easily change the path with `Text Editor`(Ubuntu 18.04) or `NotePad` (Wi
 
 #### 3. Just run the code.  
 You need to provide 2 argments(essential) & 1 argments(optional).  
-- path : Absolute ㅔath of train.txt  
+- path : Absolute ath of train.txt  
 - output : Name of the json file  
 - debug : If you want to check the bounding boxes or annotation information.
 
