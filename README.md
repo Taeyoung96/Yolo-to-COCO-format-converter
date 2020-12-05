@@ -74,4 +74,8 @@ If you want to read json files more clearly, you should use `JQ`!
 
 <p align="center">On debug mode, you can check annotation information on terminal</p> 
 
+## Contributors
+- I created a repository by referring to [chrise96/image-to-coco-json-converter](https://github.com/chrise96/image-to-coco-json-converter).  
+- **GeeJae Lee** helped to make it.
+
   
