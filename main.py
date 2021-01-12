@@ -38,10 +38,11 @@ def images_annotations_info(opt):
         if image_id % 1000 == 0:
             print("Processing " + str(image_id) + " ...")
 
-        img_file = cv2.imread(line[:-1])
+        line = line.replace('\n', '')
+        img_file = cv2.imread(line)
 
         # read a label file
-        label_path = line[:-4]+"txt"
+        label_path = line[:-3]+"txt"
         label_file = open(label_path,"r")
         label_read_line = label_file.readlines()
         label_file.close()
@@ -49,7 +50,7 @@ def images_annotations_info(opt):
         h, w, _ = img_file.shape
 
         # Create image annotation
-        image = create_image_annotation(line[:-1], w, h, image_id)
+        image = create_image_annotation(line, w, h, image_id)
         images.append(image)
 
         # yolo format - (class_id, x_center, y_center, width, height)
