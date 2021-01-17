@@ -89,7 +89,7 @@ def debug(opt):
     color_list = []
 
     # opencv random color 배정
-    for index, name in enumerate(classes):
+    for _ in range(len(classes)):
         random_color = list(np.random.random(size=3)*256)
         color_list.append(random_color)
 
@@ -148,7 +148,7 @@ def debug(opt):
 def get_args():
     parser = argparse.ArgumentParser('Yolo format annotations to COCO dataset format')
     parser.add_argument('-p', '--path', type=str, help='Absolute path for \'train.txt\' or \'test.txt\'')
-    parser.add_argument('--debug', type=bool,default=False ,help='Visualize bounding box and print annotation information')
+    parser.add_argument('--debug', action='store_true' ,help='Visualize bounding box and print annotation information')
     parser.add_argument('--output', type=str, help='Name the output json file')
 
     args = parser.parse_args()
