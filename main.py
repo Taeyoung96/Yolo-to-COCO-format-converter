@@ -86,13 +86,8 @@ def images_annotations_info(opt):
 def debug(opt):
 
     path = opt.path
-    color_list = []
-
-    # opencv random color 배정
-    for _ in range(len(classes)):
-        random_color = list(np.random.random(size=3)*256)
-        color_list.append(random_color)
-
+    color_list = np.random.randint(low=0, high=256, size=(len(classes), 3)).tolist()
+    
     # read the file
     file = open(path, "r")
     read_lines = file.readlines()
