@@ -38,7 +38,21 @@ In `main.py`, there is a code that declare the classes. You will change this wit
 Make sure that it points to the absolute path to the folder where the image and text files are located.  
 You can easily change the path with `Text Editor`(Ubuntu 18.04) or `NotePad` (Window 10).  
 
+
+   
 <p align="center"><img src="https://user-images.githubusercontent.com/41863759/100314808-d366ef00-2ffa-11eb-96fe-f4a2d5ffadb0.png" width="600px"></p>  
+
+#### 2.1  How To Use `path_replacer.py`
+
+  **If you want to quickly create a train.txt file in Ubuntu, you can use path_replacer.py.**
+  
+ Works with 2 simple arguments.
+ - path_image_folder: File path where the images are located.
+ - path_txt: File path of the 'txt' file you want to create.
+ 
+ When you want to use
+  - `python path_replacer.py --path_image_folder [File path where the images are located] --path_txt [File path of the 'txt' file you want to create]`  
+  - (For example)`python path_replacer.py --path_image_folder /home/taeyoungkim/Desktop/Yolo-to-COCO-format-converter/tutorial/train --path_txt /home/taeyoungkim/Desktop/Yolo-to-COCO-format-converter/tutorial/train.txt`
 
 #### 3. Just run the code.  
 You need to provide 2 argments(essential) & 1 argments(optional).  
