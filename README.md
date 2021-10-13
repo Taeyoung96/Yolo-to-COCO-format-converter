@@ -11,6 +11,11 @@ For example,
 **But, when you want to use another model(ex. efficientdet), you need another annotation format! :disappointed_relieved:**  
 ### This code will help you make a COCO format annotations with Yolo format!  
 
+### Updates  
+- Oct 13th, 2021 - We could support not only **`Yolo-mark`** outputs, but also **`OpenLabeling`** outputs!  
+                Also, We could make segmentation mask polygons information in json file.  
+       
+
 ## How to use
 ### Requirements
 - numpy
@@ -39,7 +44,7 @@ Alternatively, follow step 3 if you wish to work from YOLO annotations which are
 into a single file.
 
 ### 2. Prepare COCO annotation file from multiple YOLO annotation files.
-#### 2a. Image and annotation files are side by side
+#### 2a. Image and annotation files are side by side (Yolo-mark output: Seems like tutorial folder)    
 Use this approach if your training data file structure looks like this:
 <pre>
     dataset_root_dir/
@@ -49,8 +54,9 @@ Use this approach if your training data file structure looks like this:
         Photo_00003.txt
 </pre>
 
+You don't need to specify `yolo-subdir` argument.  
+
 - `python main.py --path <Absolute path to dataset_root_dir> --output <Name of the json file>`  
-- `python main.py --box2seg --path <Absolute path to dataset_root_dir> --output <Name of the json file>`
 - (For example)`python main.py --path /home/taeyoungkim/Desktop/Yolo-to-COCO-format-converter/tutorial/ --output train`  
 
 The arg `--box2seg` initializes segmentation mask polygons that have box shapes.
@@ -71,7 +77,7 @@ Use this approach if your annotations are in nested a level below the image file
 Command to use:
 - `python main.py --yolo-subdir --path <Absolute path to dataset_root_dir> --output <Name of the json file>`
 - `python main.py --yolo-subdir --box2seg --path <Absolute path to dataset_root_dir> --output <Name of the json file>`
-- (For example)`python main.py --path /home/taeyoungkim/Desktop/Yolo-to-COCO-format-converter/tutorial/ --output train`  
+
 
 
 ### 3. Prepare COCO annotation file from a single YOLO annotation file
@@ -92,21 +98,26 @@ You can easily change the path with `Text Editor`(Ubuntu 18.04) or `NotePad` (Wi
  - path_txt: File path of the 'txt' file you want to create.
  
  When you want to use
-  - `python path_replacer.py --path_image_folder [File path where the images are located] --path_txt [File path of the 'txt' file you want to create]`  
+  - `python path_replacer.py --path_image_folder <File path where the images are located> --path_txt <File path of the 'txt' file you want to create>`  
   - (For example)`python path_replacer.py --path_image_folder /home/taeyoungkim/Desktop/Yolo-to-COCO-format-converter/tutorial/train --path_txt /home/taeyoungkim/Desktop/Yolo-to-COCO-format-converter/tutorial/train.txt`
 
 #### 3.2 Now run the code.  
-You need to provide 2 argments(essential) & 1 argments(optional).  
+You need to provide 2 argments(essential) & 3 argments(optional).  
+**essential**  
 - path : Absolute path of train.txt  
 - output : Name of the json file  
-- debug : If you want to check the bounding boxes or annotation information.
+
+**optional**  
+- yolo-subdir : If your annotation label have OpenLabeling output.  
+- box2seg : If you want to make segmentation mask polygons that have box shapes.  
+- debug : If you want to check the bounding boxes or annotation information.  
 
 When you want to make json file,  
-- `python main.py --path [Absolute Path of train.txt] --output [Name of the json file]`  
+- `python main.py --path <Absolute Path of train.txt> --output <Name of the json file>`  
 - (For example)`python main.py --path /home/taeyoungkim/Desktop/Yolo-to-COCO-format-converter/tutorial/train.txt --output train`  
 
 Or when you want to check the bounding boxes,  
-- `python main.py --path [Absolute Path of train.txt] --output [Name of the json file] --debug`
+- `python main.py --path <Absolute Path of train.txt> --output <Name of the json file> --debug`
 - (For example)`python main.py --path /home/taeyoungkim/Desktop/Yolo-to-COCO-format-converter/tutorial/train.txt --output train --debug`  
 
 #### Tips  
