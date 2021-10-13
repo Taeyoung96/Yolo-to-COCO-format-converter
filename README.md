@@ -14,6 +14,7 @@ For example,
 ### Updates  
 - Oct 13th, 2021 - We could support not only **`Yolo-mark`** outputs, but also **`OpenLabeling`** outputs!  
                 Also, We could make segmentation mask polygons information in json file.  
+                Thanks to [@NauchtanRobotics](https://github.com/NauchtanRobotics)!  
        
 
 ## How to use
