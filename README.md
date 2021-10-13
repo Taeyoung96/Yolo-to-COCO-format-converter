@@ -29,12 +29,53 @@ Just clone this repository.
 ### It will be easy to understand if you refer to the tutorial folder.  
 
 When you have your own Yolo annotation format, just change a little bit!  
-#### 1. Change `classes` with your own dataset.  
+### 1. Change `classes` with your own dataset.  
 In `main.py`, there is a code that declare the classes. You will change this with your `obj.names`.  
 
 <p align="center"><img src="https://user-images.githubusercontent.com/41863759/100314803-cfd36800-2ffa-11eb-90ed-bf821ba2de4f.png" width="400px"></p>  
 
-#### 2. Check the absolute path in `train.txt`.  
+Next, follow step 2 if you have your annotations in separate text files, one for each image.
+Alternatively, follow step 3 if you wish to work from YOLO annotations which are concatenated
+into a single file.
+
+### 2. Prepare COCO annotation file from multiple YOLO annotation files.
+#### 2a. Image and annotation files are side by side
+Use this approach if your training data file structure looks like this:
+<pre>
+    dataset_root_dir/
+        Photo_00001.jpg
+        Photo_00001.txt
+        Photo_00002.jpg
+        Photo_00003.txt
+</pre>
+
+- `python main.py --path <Absolute path to dataset_root_dir> --output <Name of the json file>`  
+- `python main.py --box2seg --path <Absolute path to dataset_root_dir> --output <Name of the json file>`
+- (For example)`python main.py --path /home/taeyoungkim/Desktop/Yolo-to-COCO-format-converter/tutorial/ --output train`  
+
+The arg `--box2seg` initializes segmentation mask polygons that have box shapes.
+This is useful for when changing your modeling from object detection to image segmentation.
+These masks can then be reshaped using software such as the interface provided by makesense.ai
+
+#### 2b. Annotations are nested in a folder 'YOLO_darknet' (OpenLabeling output)
+Use this approach if your annotations are in nested a level below the image files like this:
+<pre>
+    dataset_root_dir/
+        YOLO_darknet/
+            Photo_00001.txt
+            Photo_00002.txt
+        Photo_00001.jpg
+        Photo_00002.jpg
+</pre>
+
+Command to use:
+- `python main.py --yolo-subdir --path <Absolute path to dataset_root_dir> --output <Name of the json file>`
+- `python main.py --yolo-subdir --box2seg --path <Absolute path to dataset_root_dir> --output <Name of the json file>`
+- (For example)`python main.py --path /home/taeyoungkim/Desktop/Yolo-to-COCO-format-converter/tutorial/ --output train`  
+
+
+### 3. Prepare COCO annotation file from a single YOLO annotation file
+#### 3a. Check the absolute path in `train.txt`.  
 Make sure that it points to the absolute path to the folder where the image and text files are located.  
 You can easily change the path with `Text Editor`(Ubuntu 18.04) or `NotePad` (Window 10).  
 
@@ -42,7 +83,7 @@ You can easily change the path with `Text Editor`(Ubuntu 18.04) or `NotePad` (Wi
    
 <p align="center"><img src="https://user-images.githubusercontent.com/41863759/100314808-d366ef00-2ffa-11eb-96fe-f4a2d5ffadb0.png" width="600px"></p>  
 
-#### 2.1  How To Use `path_replacer.py`
+#### 3.1  How To Use `path_replacer.py`
 
   **If you want to quickly create a train.txt file in Ubuntu, you can use path_replacer.py.**
   
@@ -54,7 +95,7 @@ You can easily change the path with `Text Editor`(Ubuntu 18.04) or `NotePad` (Wi
   - `python path_replacer.py --path_image_folder [File path where the images are located] --path_txt [File path of the 'txt' file you want to create]`  
   - (For example)`python path_replacer.py --path_image_folder /home/taeyoungkim/Desktop/Yolo-to-COCO-format-converter/tutorial/train --path_txt /home/taeyoungkim/Desktop/Yolo-to-COCO-format-converter/tutorial/train.txt`
 
-#### 3. Just run the code.  
+#### 3.2 Now run the code.  
 You need to provide 2 argments(essential) & 1 argments(optional).  
 - path : Absolute path of train.txt  
 - output : Name of the json file  
