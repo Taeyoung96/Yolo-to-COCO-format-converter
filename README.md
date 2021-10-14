@@ -60,10 +60,6 @@ You don't need to specify `yolo-subdir` argument.
 - `python main.py --path <Absolute path to dataset_root_dir> --output <Name of the json file>`  
 - (For example)`python main.py --path /home/taeyoungkim/Desktop/Yolo-to-COCO-format-converter/tutorial/ --output train`  
 
-The arg `--box2seg` initializes segmentation mask polygons that have box shapes.
-This is useful for when changing your modeling from object detection to image segmentation.
-These masks can then be reshaped using software such as the interface provided by makesense.ai
-
 #### 2b. Annotations are nested in a folder 'YOLO_darknet' (OpenLabeling output)
 Use this approach if your annotations are in nested a level below the image files like this:
 <pre>
@@ -79,7 +75,11 @@ Command to use:
 - `python main.py --yolo-subdir --path <Absolute path to dataset_root_dir> --output <Name of the json file>`
 - `python main.py --yolo-subdir --box2seg --path <Absolute path to dataset_root_dir> --output <Name of the json file>`
 
+---
 
+The arg `--box2seg` initializes segmentation mask polygons that have box shapes.
+This is useful for when changing your modeling from object detection to image segmentation.
+These masks can then be reshaped using software such as the interface provided by makesense.ai
 
 ### 3. Prepare COCO annotation file from a single YOLO annotation file
 #### 3a. Check the absolute path in `train.txt`.  
