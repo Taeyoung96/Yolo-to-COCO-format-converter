@@ -225,7 +225,7 @@ def main(opt):
             coco_format["categories"].append(categories)
 
         with open(output_path, "w") as outfile:
-            json.dump(coco_format, outfile)
+            json.dump(coco_format, outfile, indent=4)
 
         print("Finished!")
 
