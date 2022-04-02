@@ -76,15 +76,15 @@ def get_images_info_and_annotations(opt):
             width = float(label_line.split()[3])
             height = float(label_line.split()[4])
 
-            int_x_center = int(img_file.shape[1] * x_center)
-            int_y_center = int(img_file.shape[0] * y_center)
-            int_width = int(img_file.shape[1] * width)
-            int_height = int(img_file.shape[0] * height)
+            float_x_center = img_file.shape[1] * x_center
+            float_y_center = img_file.shape[0] * y_center
+            float_width = img_file.shape[1] * width
+            float_height = img_file.shape[0] * height
 
-            min_x = int_x_center - int_width / 2
-            min_y = int_y_center - int_height / 2
-            width = int_width
-            height = int_height
+            min_x = int(float_x_center - float_width / 2)
+            min_y = int(float_y_center - float_height / 2)
+            width = int(float_width)
+            height = int(float_height)
 
             annotation = create_annotation_from_yolo_format(
                 min_x,
