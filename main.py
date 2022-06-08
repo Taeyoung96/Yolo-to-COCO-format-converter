@@ -9,6 +9,7 @@ import cv2
 import argparse
 import json
 import numpy as np
+import imagesize
 
 #################################################
 # Change the classes depend on your own dataset.#
@@ -42,11 +43,10 @@ def get_images_info_and_annotations(opt):
 
     for file_path in file_paths:
         # Check how many items have progressed
-        if image_id % 1000 == 0:
-            print("Processing " + str(image_id) + " ...")
+        print("\rProcessing " + str(image_id) + " ...", end='')
 
-        img_file = cv2.imread(str(file_path))
-        h, w, _ = img_file.shape
+        # Build image annotation, known the image's width and height
+        w, h = imagesize.get(str(file_path))
         image_annotation = create_image_annotation(
             file_path=file_path, width=w, height=h, image_id=image_id
         )
@@ -76,10 +76,10 @@ def get_images_info_and_annotations(opt):
             width = float(label_line.split()[3])
             height = float(label_line.split()[4])
 
-            float_x_center = img_file.shape[1] * x_center
-            float_y_center = img_file.shape[0] * y_center
-            float_width = img_file.shape[1] * width
-            float_height = img_file.shape[0] * height
+            float_x_center = w * x_center
+            float_y_center = h * y_center
+            float_width = w * width
+            float_height = h * height
 
             min_x = int(float_x_center - float_width / 2)
             min_y = int(float_y_center - float_height / 2)
