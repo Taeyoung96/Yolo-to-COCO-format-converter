@@ -27,6 +27,7 @@ You can make same environment with anaconda environment.
 - `conda activate Yolo-to-COCO`  
 - `pip install numpy`  
 - `pip install opencv`  
+- `pip install imagesize`  
 
 Just clone this repository.  
 - `git clone https://github.com/Taeyoung96/Yolo-to-COCO-format-converter.git`  
