@@ -42,8 +42,7 @@ def get_images_info_and_annotations(opt):
 
     for file_path in file_paths:
         # Check how many items have progressed
-        if image_id % 1000 == 0:
-            print("Processing " + str(image_id) + " ...")
+        print("\rProcessing " + str(image_id) + " ...", end='')
 
         img_file = cv2.imread(str(file_path))
         h, w, _ = img_file.shape
