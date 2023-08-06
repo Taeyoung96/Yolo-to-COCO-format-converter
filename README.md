@@ -26,7 +26,7 @@ You can make same environment with anaconda environment.
 - `conda create -n Yolo-to-COCO python=3.8`  
 - `conda activate Yolo-to-COCO`  
 - `pip install numpy`  
-- `pip install opencv`  
+- `pip install opencv-python`  
 - `pip install imagesize`  
 
 Just clone this repository.  
