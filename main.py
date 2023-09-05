@@ -78,6 +78,7 @@ def get_images_info_and_annotations(opt):
             width = float(label_line.split()[3])
             height = float(label_line.split()[4])
 
+            conf = None
             if opt.results == True: #yolo_result to Coco_result (saves confidence)
                 conf = float(label_line.split()[5])
 
