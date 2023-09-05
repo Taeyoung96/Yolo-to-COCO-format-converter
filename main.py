@@ -78,6 +78,9 @@ def get_images_info_and_annotations(opt):
             width = float(label_line.split()[3])
             height = float(label_line.split()[4])
 
+            if opt.results == True: #yolo_result to Coco_result (saves confidence)
+                conf = float(label_line.split()[5])
+
             float_x_center = w * x_center
             float_y_center = h * y_center
             float_width = w * width
@@ -97,6 +100,7 @@ def get_images_info_and_annotations(opt):
                 category_id,
                 annotation_id,
                 segmentation=opt.box2seg,
+                conf = conf
             )
             annotations.append(annotation)
             annotation_id += 1
@@ -198,6 +202,12 @@ def get_args():
         action="store_true",
         help="Coco segmentation will be populated with a polygon "
         "that matches replicates the bounding box data.",
+    )
+    parser.add_argument(
+    "--results",
+    action="store_true",
+    help="Saves confidence scores of the results"
+    "yolo results to Coco results.",
     )
     args = parser.parse_args()
     return args
