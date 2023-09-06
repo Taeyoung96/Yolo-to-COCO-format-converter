@@ -3,6 +3,7 @@ from pathlib import Path
 from create_annotations import (
     create_image_annotation,
     create_annotation_from_yolo_format,
+    create_annotation_from_yolo_results_format,
     coco_format,
 )
 import cv2
@@ -19,11 +20,8 @@ import imagesize
 YOLO_DARKNET_SUB_DIR = "YOLO_darknet"
 
 classes = [
-    "chair",
-    "handle",
-    "table",
-    "button",
-    "person",
+    "matricula",
+    "cara"
 ]
 
 
@@ -60,49 +58,56 @@ def get_images_info_and_annotations(opt):
         else:
             annotations_path = file_path.parent / label_file_name
 
-        if not annotations_path.exists():
-            continue  # The image may not have any applicable annotation txt file.
+        if annotations_path.exists(): # The image may not have any applicable annotation txt file.
+            with open(str(annotations_path), "r") as label_file:
+                label_read_line = label_file.readlines()
 
-        with open(str(annotations_path), "r") as label_file:
-            label_read_line = label_file.readlines()
+            # yolo format - (class_id, x_center, y_center, width, height)
+            # coco format - (annotation_id, x_upper_left, y_upper_left, width, height)
+            for line1 in label_read_line:
+                label_line = line1
+                category_id = (
+                    int(label_line.split()[0]) + 1
+                )  # you start with annotation id with '1'
+                x_center = float(label_line.split()[1])
+                y_center = float(label_line.split()[2])
+                width = float(label_line.split()[3])
+                height = float(label_line.split()[4])
 
-        # yolo format - (class_id, x_center, y_center, width, height)
-        # coco format - (annotation_id, x_upper_left, y_upper_left, width, height)
-        for line1 in label_read_line:
-            label_line = line1
-            category_id = (
-                int(label_line.split()[0]) + 1
-            )  # you start with annotation id with '1'
-            x_center = float(label_line.split()[1])
-            y_center = float(label_line.split()[2])
-            width = float(label_line.split()[3])
-            height = float(label_line.split()[4])
+                float_x_center = w * x_center
+                float_y_center = h * y_center
+                float_width = w * width
+                float_height = h * height
 
-            if opt.results == True: #yolo_result to Coco_result (saves confidence)
-                conf = float(label_line.split()[5])
+                min_x = int(float_x_center - float_width / 2)
+                min_y = int(float_y_center - float_height / 2)
+                width = int(float_width)
+                height = int(float_height)
 
-            float_x_center = w * x_center
-            float_y_center = h * y_center
-            float_width = w * width
-            float_height = h * height
+                if opt.results == True: #yolo_result to Coco_result (saves confidence)
+                    conf = float(label_line.split()[5])
+                    annotation = create_annotation_from_yolo_results_format(
+                        min_x,
+                        min_y,
+                        width,
+                        height,
+                        image_id,
+                        category_id,
+                        conf
+                    )
 
-            min_x = int(float_x_center - float_width / 2)
-            min_y = int(float_y_center - float_height / 2)
-            width = int(float_width)
-            height = int(float_height)
-
-            annotation = create_annotation_from_yolo_format(
-                min_x,
-                min_y,
-                width,
-                height,
-                image_id,
-                category_id,
-                annotation_id,
-                segmentation=opt.box2seg,
-                conf = conf
-            )
-            annotations.append(annotation)
+                else:
+                    annotation = create_annotation_from_yolo_format(
+                        min_x,
+                        min_y,
+                        width,
+                        height,
+                        image_id,
+                        category_id,
+                        annotation_id,
+                        segmentation=opt.box2seg,
+                    )
+                annotations.append(annotation)
             annotation_id += 1
 
         image_id += 1  # if you finished annotation work, updates the image id.
@@ -236,8 +241,16 @@ def main(opt):
             }
             coco_format["categories"].append(categories)
 
-        with open(output_path, "w") as outfile:
-            json.dump(coco_format, outfile, indent=4)
+        if opt.results == True:
+            dict_list = []
+            for l in coco_format["annotations"]:
+                dict_list.append(l[0])
+            with open(output_path, "w") as outfile:
+                str = json.dump(dict_list, outfile, indent=4)
+
+        else: 
+            with open(output_path, "w") as outfile:
+                json.dump(coco_format, outfile, indent=4)
 
         print("Finished!")
 
