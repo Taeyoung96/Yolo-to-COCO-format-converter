@@ -108,7 +108,7 @@ def get_images_info_and_annotations(opt):
                         segmentation=opt.box2seg,
                     )
                 annotations.append(annotation)
-            annotation_id += 1
+                annotation_id += 1
 
         image_id += 1  # if you finished annotation work, updates the image id.
 
@@ -248,7 +248,7 @@ def main(opt):
             with open(output_path, "w") as outfile:
                 str = json.dump(dict_list, outfile, indent=4)
 
-        else: 
+        else:
             with open(output_path, "w") as outfile:
                 json.dump(coco_format, outfile, indent=4)
 
