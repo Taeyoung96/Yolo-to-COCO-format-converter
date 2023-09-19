@@ -19,11 +19,6 @@ import imagesize
 
 YOLO_DARKNET_SUB_DIR = "YOLO_darknet"
 
-classes = [
-    "matricula",
-    "cara"
-]
-
 
 def get_images_info_and_annotations(opt):
     path = Path(opt.path)
@@ -43,7 +38,7 @@ def get_images_info_and_annotations(opt):
 
     for file_path in file_paths:
         # Check how many items have progressed
-        print("\rProcessing " + str(image_id) + " ...", end='')
+        print("\rProcessing " + str(image_id) + " ...", end="")
 
         # Build image annotation, known the image's width and height
         w, h = imagesize.get(str(file_path))
@@ -58,7 +53,9 @@ def get_images_info_and_annotations(opt):
         else:
             annotations_path = file_path.parent / label_file_name
 
-        if annotations_path.exists(): # The image may not have any applicable annotation txt file.
+        if (
+            annotations_path.exists()
+        ):  # The image may not have any applicable annotation txt file.
             with open(str(annotations_path), "r") as label_file:
                 label_read_line = label_file.readlines()
 
@@ -84,16 +81,10 @@ def get_images_info_and_annotations(opt):
                 width = int(float_width)
                 height = int(float_height)
 
-                if opt.results == True: #yolo_result to Coco_result (saves confidence)
+                if opt.results == True:  # yolo_result to Coco_result (saves confidence)
                     conf = float(label_line.split()[5])
                     annotation = create_annotation_from_yolo_results_format(
-                        min_x,
-                        min_y,
-                        width,
-                        height,
-                        image_id,
-                        category_id,
-                        conf
+                        min_x, min_y, width, height, image_id, category_id, conf
                     )
 
                 else:
@@ -117,7 +108,7 @@ def get_images_info_and_annotations(opt):
 
 def debug(opt):
     path = opt.path
-    color_list = np.random.randint(low=0, high=256, size=(len(classes), 3)).tolist()
+    color_list = np.random.randint(low=0, high=256, size=(len(opt.classes), 3)).tolist()
 
     # read the file
     file = open(path, "r")
@@ -154,7 +145,7 @@ def debug(opt):
             width = int(img_file.shape[1] * width)
             height = int(img_file.shape[0] * height)
 
-            print("class name :", classes[int(category_id)])
+            print("class name :", opt.classes[int(category_id)])
             print("x_upper_left : ", min_x, "\t", "y_upper_left : ", min_y)
             print("width : ", width, "\t", "\t", "height : ", height)
             print()
@@ -209,11 +200,12 @@ def get_args():
         "that matches replicates the bounding box data.",
     )
     parser.add_argument(
-    "--results",
-    action="store_true",
-    help="Saves confidence scores of the results"
-    "yolo results to Coco results.",
+        "--results",
+        action="store_true",
+        help="Saves confidence scores of the results" "yolo results to Coco results.",
     )
+    parser.add_argument("--classes", nargs="+", help="type in classes", required=True)
+
     args = parser.parse_args()
     return args
 
@@ -233,7 +225,7 @@ def main(opt):
             coco_format["annotations"],
         ) = get_images_info_and_annotations(opt)
 
-        for index, label in enumerate(classes):
+        for index, label in enumerate(opt.classes):
             categories = {
                 "supercategory": "Defect",
                 "id": index + 1,  # ID starts with '1' .
